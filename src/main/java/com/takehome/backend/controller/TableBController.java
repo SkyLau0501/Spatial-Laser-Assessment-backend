@@ -55,16 +55,16 @@ public class TableBController {
 		
 		List<String> tableAKey = new LinkedList<>();
 		List<String> tableBKey = new LinkedList<>();
-		
+
 		//get TableA placekey
 		if(tableA.size() > 0){
 			for(TableA tableARecord : tableA) {
-				
 				String jsonString = callPlaceKeyAPI(tableARecord.getAddress(),tableARecord.getCity(),tableARecord.getState());
 				PlaceKey pk = mapper.readValue(jsonString,PlaceKey.class);
 				tableAKey.add(pk.getPlacekey());
 			}
 		}
+
 		//get TableB placekey
 		if(tableB.size() > 0){
 			for (TableB tableBRecord : tableB){
@@ -73,11 +73,11 @@ public class TableBController {
 				tableBKey.add(pk.getPlacekey());
 			}
 		}
-		//compare TableA and TableB placekey, if there is duplicate, remove the return tableB from the list
+
+		//compare TableA and TableB placekey, if there is duplicate, remove the tableB from the list
 		if(tableBKey.size() > 0){
 			for(int i = 0;i < tableBKey.size();i++) {
 				if(tableAKey.contains(tableBKey.get(i))) tableB.set(i, null);
-				
 			}
 		}
 		
@@ -104,8 +104,16 @@ public class TableBController {
 		stringBuilder.append("}");
 		
 		HttpEntity<String> request = new HttpEntity<String>(stringBuilder.toString(), headers);
+		String result = "";
+
+		try {
+			result = restTemplate.postForObject(url, request,String.class);
+		}
+		catch (Exception e)
+		{
+			return "Fail to get placeKey API";
+		}
 		
-		String result = restTemplate.postForObject(url, request,String.class);
 
 		return result;
 
