@@ -20,11 +20,11 @@ public class TableAController {
 	TableARepository tableARepository;
 	
 	@GetMapping("/getTableAData")
-    public String getTableAData() throws JsonProcessingException{
+    public List<TableA> getTableAData() throws JsonProcessingException{
 
 		List<TableA> tableA= new ArrayList<TableA>();
 		tableA = tableARepository.findAll();
 		
-        return mapper.writeValueAsString(tableA);
+		return tableA;
     }
 }
