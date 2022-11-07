@@ -11,7 +11,7 @@
 	<groupId>com.takehome</groupId>
 	<artifactId>backend</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<packaging>war</packaging>
+	<packaging>jar</packaging>
 	<name>backend</name>
 	<description>Take home - backend</description>
 	<properties>
@@ -51,6 +51,7 @@
 	</dependencies>
 
 	<build>
+		<finalName>backend</finalName>
 		<plugins>
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
